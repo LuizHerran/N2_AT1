@@ -39,7 +39,7 @@ int abrirarquivo(DADOS dados[]){
         strcpy(dados[i].sensor, tk);
 
         //troca de formto de dados para cada sensor
-        if(strcmp(dados[i].sensor, "TEM")  == 0){
+        if(strcmp(dados[i].sensor, "TEMP")  == 0){
             tk=strtok(NULL, " ");
             if(strlen(tk) >= sizeof(dados[i].sensor)){
             printf("Estouro de memoria em dados dos sensores!");
@@ -84,7 +84,7 @@ void orddh(DADOS dados[]){
         for (int j = 0; j < i; j++){
                 if(strcmp(dados[j].sensor, "PRE") == 0){
                     printf(" %-12d | %-5s | %s\n", dados[j].DH, dados[j].sensor, (dados[j].db == 1 ? "True" : "False"));
-                }else if(strcmp(dados[j].sensor, "TEM") == 0){
+                }else if(strcmp(dados[j].sensor, "TEMP") == 0){
                     printf(" %-12d | %-5s | %s", dados[j].DH, dados[j].sensor, dados[j].dc);
                 }else if(strcmp(dados[j].sensor, "VIB") == 0){
                     printf(" %-12d | %-5s | %-10.2f\n", dados[j].DH, dados[j].sensor, dados[j].dds);
@@ -105,7 +105,7 @@ int narc(DADOS dados[]){
     for (int j = 0; j < i; j++){
         if(strcmp(dados[j].sensor, "PRE") == 0){
             fprintf(narc, " %-12d | %-5s | %s\n", dados[j].DH, dados[j].sensor, (dados[j].db == 1 ? "True" : "False"));
-        }else if(strcmp(dados[j].sensor, "TEM") == 0){
+        }else if(strcmp(dados[j].sensor, "TEMP") == 0){
             fprintf(narc, " %-12d | %-5s | %s", dados[j].DH, dados[j].sensor, dados[j].dc);
         }else if(strcmp(dados[j].sensor, "VIB") == 0){
             fprintf(narc, " %-12d | %-5s | %-10.2f\n", dados[j].DH, dados[j].sensor, dados[j].dds);
@@ -219,7 +219,7 @@ int main(){
             for (int j = 0; j < i; j++){
                 if(strcmp(dd[j].sensor, "PRE") == 0){
                     printf(" %-12d | %-5s | %s\n", dd[j].DH, dd[j].sensor, (dd[j].db == 1 ? "True" : "False"));
-                }else if(strcmp(dd[j].sensor, "TEM") == 0){
+                }else if(strcmp(dd[j].sensor, "TEMP") == 0){
                     printf(" %-12d | %-5s | %s", dd[j].DH, dd[j].sensor, dd[j].dc);
                 }else if(strcmp(dd[j].sensor, "VIB") == 0){
                     printf(" %-12d | %-5s | %-10.2f\n", dd[j].DH, dd[j].sensor, dd[j].dds);

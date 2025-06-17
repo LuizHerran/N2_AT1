@@ -134,7 +134,7 @@ int main(int argc, char *argv[]){
         return(1);
     }
     
-    if(strlen(argv[7]) > 20){
+    if(sizeof(argv[7]) > 20){
         printf("\n//========================================\\\\");
         printf("\n||\n");
         printf("||\tNome do sensor muito grande\n||\tuse apenas 20 caracteres!\n");

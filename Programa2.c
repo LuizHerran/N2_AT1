@@ -53,41 +53,43 @@ int busca_binaria(TIME TIMEs[], int n, time_t alvo)
     return melhor_indice;
 }
 
-int main(){
-    char sens[10];
-    char dh[20];
+int main(int argc, char *argv[]){
+    
+    if(sizeof(argv[1]) > 20){
+        printf("\n//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tNome do sensor muito grande\n||\tuse apenas 20 caracteres!\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+    }
+    char sens[sizeof(argv[1])];
+    strcpy(sens, argv[1]);
+    
+    char dh[15];
     int ver = 0;
-    printf("//==================================================================================\\\\\n");
-    printf("||\n");
-    printf("||\t\tTEMP - Temperatura, PRE - Pressao, VIB - Vibracao, SON - Sonoro\n");
-    printf("||\n");
-    printf("||\t Informe o nome do sensor: ");
-    scanf(" %s", &sens);
     ver = strcmp(sens, "TEMP");
     ver = strcmp(sens, "PRE");
     ver = strcmp(sens, "VIB");
     ver = strcmp(sens, "SON");
-    if(ver == 0){
+    if(ver != 0){
     printf("\n//========================================\\\\");
     printf("\n||\n");
-    printf("||\tSensor invalido! - %s\n", ver);
+    printf("||\tSensor invalido! - %s\n", sens);
     printf("||\n");
     printf("\\\\=======================================//\n");
     return(1);
     }
-    printf("||\n");
-    printf("\r||\tInforme a data e hora (DD-MM-AAAA HH:MM:SS): ");
-    getchar();
-
-    fgets(dh, sizeof(dh), stdin);
-    dh[strcspn(dh, "\n")] = 0;
-    printf("\r||\n");
-    printf("\\\\===================================================================================//\n");
 
     // Data e hora em timestamp
     struct tm t;
     memset(&t, 0, sizeof(struct tm));
-    sscanf(dh, "%d-%d-%d %d:%d:%d", &t.tm_mday, &t.tm_mon, &t.tm_year, &t.tm_hour, &t.tm_min, &t.tm_sec);
+
+    t.tm_mday = atoi(argv[2]);
+    t.tm_mon = atoi(argv[3]);
+    t.tm_year = atoi(argv[4]);
+    t.tm_hour = atoi(argv[5]);
+    t.tm_min = atoi(argv[6]);
+    t.tm_sec = atoi(argv[7]);
 
     t.tm_year -= 1900;
     t.tm_mon -= 1;
@@ -110,7 +112,7 @@ int main(){
         float valor;
         char va[16];
 
-        if(strcmp(sens, "TEM") == 0){
+        if(strcmp(sens, "TEMP") == 0){
             if (sscanf(linha, "%ld %s %s", &ts, sens_lido, va) == 3){
             if (strcmp(sens_lido, sens) == 0){
                 if (total < MAX_LINHAS){
