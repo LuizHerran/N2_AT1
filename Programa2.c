@@ -55,23 +55,20 @@ int busca_binaria(TIME TIMEs[], int n, time_t alvo)
 
 int main(int argc, char *argv[]){
     
-    if(sizeof(argv[1]) > 20){
+    if(strlen(argv[1]) > 20){
         printf("\n//========================================\\\\");
         printf("\n||\n");
         printf("||\tNome do sensor muito grande\n||\tuse apenas 20 caracteres!\n");
         printf("||\n");
         printf("\\\\=======================================//\n");
+        return(1);
     }
-    char sens[sizeof(argv[1])];
+    char sens[strlen(argv[1])];
     strcpy(sens, argv[1]);
     
     char dh[15];
     int ver = 0;
-    ver = strcmp(sens, "TEMP");
-    ver = strcmp(sens, "PRE");
-    ver = strcmp(sens, "VIB");
-    ver = strcmp(sens, "SON");
-    if(ver != 0){
+    if(strcmp(sens, "TEMP") != 0 && strcmp(sens, "PRE") != 0 && strcmp(sens, "VIB") != 0 && strcmp(sens, "SON") != 0){
     printf("\n//========================================\\\\");
     printf("\n||\n");
     printf("||\tSensor invalido! - %s\n", sens);
@@ -85,11 +82,59 @@ int main(int argc, char *argv[]){
     memset(&t, 0, sizeof(struct tm));
 
     t.tm_mday = atoi(argv[2]);
+    if(t.tm_mday < 1 || t.tm_mday > 31){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
     t.tm_mon = atoi(argv[3]);
+    if(t.tm_mon < 1 || t.tm_mon > 12){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
     t.tm_year = atoi(argv[4]);
+    if(t.tm_year < 1){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
     t.tm_hour = atoi(argv[5]);
+    if(t.tm_hour < 1 || t.tm_hour > 24){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tHora invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
     t.tm_min = atoi(argv[6]);
+    if(t.tm_min < 1 || t.tm_min > 59){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tMin invalido...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
     t.tm_sec = atoi(argv[7]);
+    if(t.tm_sec < 1 || t.tm_sec > 59){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tSegundo invalido...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
 
     t.tm_year -= 1900;
     t.tm_mon -= 1;
@@ -98,7 +143,7 @@ int main(int argc, char *argv[]){
     // Arquivo completo
     FILE *fp = fopen("dados.txt", "r");
     if (!fp){
-        perror("Erro ao abrir o arquivo:\n");
+        perror("\nErro ao abrir o arquivo: ");
         return 1;
     }
 
@@ -124,7 +169,9 @@ int main(int argc, char *argv[]){
                     }
                     total++;
                 }
+                total++;
             }
+            total++;
         }
         }
         else{
@@ -135,7 +182,9 @@ int main(int argc, char *argv[]){
                     TIMEs[total].valor = valor;
                     total++;
                 }
+                total++;
             }
+            total++;
         }
         }
     }
@@ -165,7 +214,7 @@ int main(int argc, char *argv[]){
             printf("||\tTimestamp: %s\n", buffer);
             printf("||\tValor: %s\n", (TIMEs[indice].valor == 1 ? "True" : "False"));
             printf("\\\\======================================//");
-        }else if(strcmp(sens, "TEM") == 0){
+        }else if(strcmp(sens, "TEMP") == 0){
             printf("\n//=======================================\\\\");
             printf("\n||\n");
             printf("||\tData e hora mais proxima:\n");
@@ -184,12 +233,12 @@ int main(int argc, char *argv[]){
             printf("\n||\n");
             printf("||\tData e hora mais proxima:\n");
             printf("||\tTimestamp: %s\n", buffer);
-            printf("||\tValor: %.1f\n", TIMEs[indice].valor);
+            printf("||\tValor: %.2f\n", TIMEs[indice].valor);
             printf("\\\\======================================//"); 
         }else printf("Erro ao ler!\n");
     }
     else{
-        printf("\nNenhuma TIME encontrada.\n");
+        printf("\nNenhuma TIME encontrado.\n");
     }
     return 0;
 }
