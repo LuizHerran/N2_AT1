@@ -73,6 +73,15 @@ char* string(int se, char *va){
 
 int main(int argc, char *argv[]){
 
+    if(argc > 9){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tMais informcoes do que o necessario... %d\n", argc);
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }
+
     int di, mi, ai, df, mf, af;
     di = atoi(argv[1]);
     mi = atoi(argv[2]);
@@ -102,21 +111,21 @@ int main(int argc, char *argv[]){
         printf("||\n");
         printf("\\\\=======================================//\n");
         return(1);
-    }else if(df < 1 || df > 31){
+    }else if(af < 0 || af < ai){
         printf("//========================================\\\\");
         printf("\n||\n");
         printf("||\tData invalida...\n");
         printf("||\n");
         printf("\\\\=======================================//\n");
         return(1);
-    }else if(mf < 1 || mf > 12){
+    }else if(mf < 1 || mf > 12 || (af < ai && mf < mi)){
         printf("//========================================\\\\");
         printf("\n||\n");
         printf("||\tData invalida...\n");
         printf("||\n");
         printf("\\\\=======================================//\n");
         return(1);
-    }else if(af < 0){
+    }else if(df < 1 || df > 31 || (af < ai && df < di)){
         printf("//========================================\\\\");
         printf("\n||\n");
         printf("||\tData invalida...\n");
