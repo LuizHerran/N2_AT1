@@ -3,16 +3,12 @@
 #include <string.h>
 #include <time.h>
 
-#define NUM_SENSORES 4
 #define LEITURAS_POR_SENSOR 2000
 
-char *sensores[NUM_SENSORES] = {"TEM", "PRE", "VIB", "SON"};
-char *clima[6] = {"Muito_Frio", "Frio", "Fresco", "Quente", "Muito_Quente"};
+char *sensores;
 
 float criar_val(int sensor){
     switch (sensor) {
-        case 0:
-            return (rand() % 1000) / 10.0 + 20.0;
         case 1:
             return (rand() % 2);
         case 2:
@@ -41,18 +37,50 @@ time_t gerar_time(int inic, int fin){
 
     int aux = fin - inic;
     time_t time_aleatorio = (inic + (fin - (rand() % aux)));
-    
+    if(time_aleatorio < 0){
+        time_aleatorio = abs(time_aleatorio);
+    }
     return time_aleatorio;
 }
 
-int main() {
-    int di, mi, ai, df, mf, af;
-    char sens[4];
+char* string(int se, char *va){
 
-    printf("//========================================\\\\");
-    printf("\n||\n");
-    printf("\r||\tDigite o dia de inicio (1-31): ");
-    scanf("%d", &di);
+    switch(se){
+        case 0:
+            return strcpy(va, "Cabelo");
+        case 1:
+            return strcpy(va, "Banana");
+        case 2:
+            return strcpy(va, "Manco");
+        case 3:
+            return strcpy(va, "Cobra");
+        case 4:
+            return strcpy(va, "Macaco");
+        case 5:
+            return strcpy(va, "Helicoptero");
+        case 6:
+            return strcpy(va, "Bolo");
+        case 7:
+            return strcpy(va, "Cenoura");
+        case 8:
+            return strcpy(va, "Dipirona");
+        case 9:
+            return strcpy(va, "Ponte");
+        default:
+            return strcpy(va, "Teto");
+    }
+}
+
+int main(int argc, char *argv[]){
+
+    int di, mi, ai, df, mf, af;
+    di = atoi(argv[1]);
+    mi = atoi(argv[2]);
+    ai = atoi(argv[3]);
+    df = atoi(argv[4]);
+    mf = atoi(argv[5]);
+    af = atoi(argv[6]);
+
     if(di < 1 || di > 31){
         printf("//========================================\\\\");
         printf("\n||\n");
@@ -60,11 +88,35 @@ int main() {
         printf("||\n");
         printf("\\\\=======================================//\n");
         return(1);
-    }
-    printf("||\n");
-    printf("||\tDigite o mes de incio(1-12): ");
-    scanf("%d", &mi);
-    if(mi < 1 || mi > 12){
+    }else if(mi < 1 || mi > 12){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }else if(ai < 0){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }else if(df < 1 || df > 31){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }else if(mf < 1 || mf > 12){
+        printf("//========================================\\\\");
+        printf("\n||\n");
+        printf("||\tData invalida...\n");
+        printf("||\n");
+        printf("\\\\=======================================//\n");
+        return(1);
+    }else if(af < 0){
         printf("//========================================\\\\");
         printf("\n||\n");
         printf("||\tData invalida...\n");
@@ -72,92 +124,36 @@ int main() {
         printf("\\\\=======================================//\n");
         return(1);
     }
-    printf("||\n");
-    printf("\r||\tDigite o ano de inicio: ");
-    scanf("%d", &ai);
-    if(ai < 1){
-        printf("//========================================\\\\");
+    
+    if(strlen(argv[7]) > 20){
+        printf("\n//========================================\\\\");
         printf("\n||\n");
-        printf("||\tData invalida...\n");
+        printf("||\tNome do sensor muito grande\n||\tuse apenas 20 caracteres!\n");
         printf("||\n");
         printf("\\\\=======================================//\n");
-        return(1);
     }
-    printf("||\n");
-    printf("\\\\=======================================//\n");
-    printf("\n//========================================\\\\");
-    printf("\n||\n");
-    printf("\r||\tDigite o dia final (1-31): ");
-    scanf("%d", &df);
-    if(df < 1 || df > 31){
-        printf("//========================================\\\\");
-        printf("\n||\n");
-        printf("||\tData invalida...\n");
-        printf("||\n");
-        printf("\\\\=======================================//\n");
-        return(1);
-    }
-    printf("||\n");
-    printf("||\tDigite o mes final(1-12): ");
-    scanf("%d", &mf);
-    if(mf < 1 || mf > 12){
-        printf("//========================================\\\\");
-        printf("\n||\n");
-        printf("||\tData invalida...\n");
-        printf("||\n");
-        printf("\\\\=======================================//\n");
-        return(1);
-    }
-    printf("||\n");
-    printf("\r||\tDigite o ano final inicio: ");
-    scanf("%d", &af);
-    if(af < 1){
-        printf("//========================================\\\\");
-        printf("\n||\n");
-        printf("||\tData invalida...\n");
-        printf("||\n");
-        printf("\\\\=======================================//\n");
-        return(1);
-    }
-    printf("||\n");
-    printf("\\\\=======================================//\n");
-    printf("//==================================================================================\\\\\n");
-    printf("||\n");
-    printf("||\t\tTEMP - Temperatura, PRE - Pressao, VIB - Vibracao, SON - Sonoro\n");
-    printf("||\n");
-    printf("||\r\tDigite o tipo de sensor: ");
-    scanf(" %s", sens);
-    printf("\n\\\\==================================================================================//\n");
-    srand(time(NULL));
+    
+    char sens[strlen(argv[7])];
+    strcpy(sens, argv[7]);
 
-    int ver = 0;
-    ver = strcmp(sens, "TEMP");
-    ver = strcmp(sens, "PRE");
-    ver = strcmp(sens, "VIB");
-    ver = strcmp(sens, "SON");
-    if(ver == 0){
+    /*if(strcmp(sens, " ")){
     printf("\n//========================================\\\\");
     printf("\n||\n");
-    printf("||\tSensor invalido!\n");
+    printf("||\tSensor invalido! - %s\n", sens);
     printf("||\n");
     printf("\\\\=======================================//\n");
     return(1);
-    }
-    char tip[7];
-    printf("//==================================================================================\\\\\n");
-    printf("|| - %s\n", sens);
-    printf("||\tCONJ_Z - para dados inteiros.\n");
-    printf("||\tCONJ_Q - para dados float");
-    printf("\n||\tTEXTO - para dados string");
-    printf("\n||\tBINARIO - para dados tipo booleano");
-    printf("\n||\n");
-    printf("||\tDigite o tipo de dado a ser gerado: ");
-    scanf(" %s", tip);
+    }*/
+
+    char tip[sizeof(argv[8])];
+    strcpy(tip, argv[8]);
+
+    int ver = 0;
     ver = strcmp(tip, "CONJ_Z");
     ver = strcmp(tip, "CONJ_Q");
     ver = strcmp(tip, "TEXTO");
     ver = strcmp(tip, "BINARIO");
-    printf("\n- %s\n", sens);
+
     if(ver != 0){
     printf("\n//========================================\\\\");
     printf("\n||\n");
@@ -180,7 +176,7 @@ int main() {
             time_t timtamp = gerar_time(timtampi, timtampf);
             if(strcmp(tip, "TEXTO") == 0){
                 char valor[16];
-                strcpy(valor, clima[(rand() % 5)]);
+                string(rand() % 10, valor);
                 fprintf(fp, "%ld %s %s\n", timtamp, sens, valor);
             }else if(strcmp(tip, "BINARIO") == 0){
                 int valor = criar_val(1);
@@ -196,7 +192,7 @@ int main() {
     fclose(fp);
     printf("\n//======================================\\\\\n");
     printf("||\n");
-    printf("||\tArquivo com novos dados criados! - %s\n", sens);
+    printf("||\tArquivo com novos dados criados!\n");
     printf("||\n");
     printf("\\\\======================================//");
     return 0;
