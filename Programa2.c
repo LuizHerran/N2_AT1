@@ -59,18 +59,18 @@ int main(){
     int ver = 0;
     printf("//==================================================================================\\\\\n");
     printf("||\n");
-    printf("||\t\tTEM - Temperatura, PRE - Pressao, VIB - Vibracao, SON - Sonoro\n");
+    printf("||\t\tTEMP - Temperatura, PRE - Pressao, VIB - Vibracao, SON - Sonoro\n");
     printf("||\n");
-    printf("||\t Informe o nome do sensor:");
-    scanf(" %s", sens);
+    printf("||\t Informe o nome do sensor: ");
+    scanf(" %s", &sens);
     ver = strcmp(sens, "TEMP");
     ver = strcmp(sens, "PRE");
     ver = strcmp(sens, "VIB");
     ver = strcmp(sens, "SON");
-    if(ver != 0){
+    if(ver == 0){
     printf("\n//========================================\\\\");
     printf("\n||\n");
-    printf("||\tSensor invalido!\n");
+    printf("||\tSensor invalido! - %s\n", ver);
     printf("||\n");
     printf("\\\\=======================================//\n");
     return(1);
@@ -78,8 +78,6 @@ int main(){
     printf("||\n");
     printf("\r||\tInforme a data e hora (DD-MM-AAAA HH:MM:SS): ");
     getchar();
-
-
 
     fgets(dh, sizeof(dh), stdin);
     dh[strcspn(dh, "\n")] = 0;

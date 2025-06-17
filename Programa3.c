@@ -39,7 +39,8 @@ time_t gerar_timtamp(int d, int m, int a) {
 
 time_t gerar_time(int inic, int fin){
 
-    time_t time_aleatorio = inic + rand() % (fin - inic + 1);
+    int aux = fin - inic;
+    time_t time_aleatorio = (inic + (fin - (rand() % aux)));
     
     return time_aleatorio;
 }
@@ -124,7 +125,7 @@ int main() {
     printf("||\n");
     printf("||\t\tTEMP - Temperatura, PRE - Pressao, VIB - Vibracao, SON - Sonoro\n");
     printf("||\n");
-    printf("||\tDigite o tipo de sensor: ");
+    printf("||\r\tDigite o tipo de sensor: ");
     scanf(" %s", sens);
     printf("\n\\\\==================================================================================//\n");
     srand(time(NULL));
@@ -134,10 +135,33 @@ int main() {
     ver = strcmp(sens, "PRE");
     ver = strcmp(sens, "VIB");
     ver = strcmp(sens, "SON");
-    if(ver != 0){
+    if(ver == 0){
     printf("\n//========================================\\\\");
     printf("\n||\n");
     printf("||\tSensor invalido!\n");
+    printf("||\n");
+    printf("\\\\=======================================//\n");
+    return(1);
+    }
+    char tip[7];
+    printf("//==================================================================================\\\\\n");
+    printf("|| - %s\n", sens);
+    printf("||\tCONJ_Z - para dados inteiros.\n");
+    printf("||\tCONJ_Q - para dados float");
+    printf("\n||\tTEXTO - para dados string");
+    printf("\n||\tBINARIO - para dados tipo booleano");
+    printf("\n||\n");
+    printf("||\tDigite o tipo de dado a ser gerado: ");
+    scanf(" %s", tip);
+    ver = strcmp(tip, "CONJ_Z");
+    ver = strcmp(tip, "CONJ_Q");
+    ver = strcmp(tip, "TEXTO");
+    ver = strcmp(tip, "BINARIO");
+    printf("\n- %s\n", sens);
+    if(ver != 0){
+    printf("\n//========================================\\\\");
+    printf("\n||\n");
+    printf("||\tTipo de dado invalido!\n");
     printf("||\n");
     printf("\\\\=======================================//\n");
     return(1);
@@ -154,25 +178,25 @@ int main() {
             time_t timtampi = gerar_timtamp(di, mi, ai);
             time_t timtampf = gerar_timtamp(df, mf, af);
             time_t timtamp = gerar_time(timtampi, timtampf);
-            if(strcmp(sens, "TEMP") == 0){
+            if(strcmp(tip, "TEXTO") == 0){
                 char valor[16];
                 strcpy(valor, clima[(rand() % 5)]);
-                fprintf(fp, "%ld %s %s\n", timtamp, sensores[0], valor);
-            }else if(strcmp(sens, "PRE") == 0){
+                fprintf(fp, "%ld %s %s\n", timtamp, sens, valor);
+            }else if(strcmp(tip, "BINARIO") == 0){
                 int valor = criar_val(1);
-                fprintf(fp, "%ld %s %s\n", timtamp, sensores[1], (valor == 1 ? "True" : "False"));
-            }else if(strcmp(sens, "VIB") == 0){
+                fprintf(fp, "%ld %s %s\n", timtamp, sens, (valor == 1 ? "True" : "False"));
+            }else if(strcmp(tip, "CONJ_Q") == 0){
                 float valor = criar_val(2);
-                fprintf(fp, "%ld %s %.2f\n", timtamp, sensores[2], valor);
-            }else if(strcmp(sens, "SON") == 0){
+                fprintf(fp, "%ld %s %.2f\n", timtamp, sens, valor);
+            }else if(strcmp(tip, "CONJ_Z") == 0){
                 int valor = criar_val(3);
-                fprintf(fp, "%ld %s %d\n", timtamp, sensores[3], valor);
+                fprintf(fp, "%ld %s %d\n", timtamp, sens, valor);
             }
         }
     fclose(fp);
     printf("\n//======================================\\\\\n");
     printf("||\n");
-    printf("||\tArquivo com novos dados criados!\n");
+    printf("||\tArquivo com novos dados criados! - %s\n", sens);
     printf("||\n");
     printf("\\\\======================================//");
     return 0;

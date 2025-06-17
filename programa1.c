@@ -71,7 +71,7 @@ void orddh(DADOS dados[]){
     for(int p = 0; p < i; p++){
 
         for(int j = 0; j < i; j++){
-            if(dados[j].DH > dados[j+1].DH){
+            if(dados[j].DH < dados[j+1].DH){
 
                 aux = dados[j].DH;
                 dados[j].DH = dados[j+1].DH;
